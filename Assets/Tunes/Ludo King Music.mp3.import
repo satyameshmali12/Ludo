@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Ludo King Music.mp3-b85b4c579e60942c9626262a277b10fa.mp3str"
+
+[deps]
+
+source_file="res://Assets/Tunes/Ludo King Music.mp3"
+dest_files=[ "res://.import/Ludo King Music.mp3-b85b4c579e60942c9626262a277b10fa.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

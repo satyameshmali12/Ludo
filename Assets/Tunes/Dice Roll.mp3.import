@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Dice Roll.mp3-e6117ccfe282d0047be849d0e43a8832.mp3str"
+
+[deps]
+
+source_file="res://Assets/Tunes/Dice Roll.mp3"
+dest_files=[ "res://.import/Dice Roll.mp3-e6117ccfe282d0047be849d0e43a8832.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,4 @@
+data/pieceData.txt
+
+Piece_Type
+StartBoardPos

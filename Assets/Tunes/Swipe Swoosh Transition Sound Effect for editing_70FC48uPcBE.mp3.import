@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Swipe Swoosh Transition Sound Effect for editing_70FC48uPcBE.mp3-0a755551c88a70ceb082c5ab51f7ac89.mp3str"
+
+[deps]
+
+source_file="res://Assets/Tunes/Swipe Swoosh Transition Sound Effect for editing_70FC48uPcBE.mp3"
+dest_files=[ "res://.import/Swipe Swoosh Transition Sound Effect for editing_70FC48uPcBE.mp3-0a755551c88a70ceb082c5ab51f7ac89.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

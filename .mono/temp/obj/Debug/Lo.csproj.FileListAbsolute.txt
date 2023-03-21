@@ -1,0 +1,9 @@
+C:\Users\satya\Onedrive\Desktop\LO\.mono\temp\bin\Debug\Lo.dll
+C:\Users\satya\Onedrive\Desktop\LO\.mono\temp\bin\Debug\Lo.pdb
+C:\Users\satya\Onedrive\Desktop\LO\.mono\temp\obj\Debug\Lo.csproj.AssemblyReference.cache
+C:\Users\satya\Onedrive\Desktop\LO\.mono\temp\obj\Debug\Lo.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\satya\Onedrive\Desktop\LO\.mono\temp\obj\Debug\Lo.AssemblyInfoInputs.cache
+C:\Users\satya\Onedrive\Desktop\LO\.mono\temp\obj\Debug\Lo.AssemblyInfo.cs
+C:\Users\satya\Onedrive\Desktop\LO\.mono\temp\obj\Debug\Lo.csproj.CoreCompileInputs.cache
+C:\Users\satya\Onedrive\Desktop\LO\.mono\temp\obj\Debug\Lo.dll
+C:\Users\satya\Onedrive\Desktop\LO\.mono\temp\obj\Debug\Lo.pdb

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "+hhd6P2mTk5fo/W6dpIR5tYjzX8CJwwEfG7Qzx494QbDSBf3Y0I3xkAet7fm+07PSv+6yy3DTIBv50KNhWBFtw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\satya\\Onedrive\\Desktop\\LO\\Lo.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\satya\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.2\\microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
+    "C:\\Users\\satya\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.2\\microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

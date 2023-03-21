@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Ludo King - Sound ! Notification Tone.mp3-e6cb5753fb0f4134e555fe1aa5e4da38.mp3str"
+
+[deps]
+
+source_file="res://Assets/Tunes/Ludo King - Sound ! Notification Tone.mp3"
+dest_files=[ "res://.import/Ludo King - Sound ! Notification Tone.mp3-e6cb5753fb0f4134e555fe1aa5e4da38.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
