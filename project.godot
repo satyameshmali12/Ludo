@@ -28,6 +28,13 @@ window/stretch/aspect="keep_width"
 
 common/drop_mouse_on_gui_input_disabled=true
 
+[importer_defaults]
+
+mp3={
+"loop": false,
+"loop_offset": 0
+}
+
 [input]
 
 Mouse_Pressed={

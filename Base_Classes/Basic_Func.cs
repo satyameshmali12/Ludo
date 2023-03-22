@@ -47,11 +47,9 @@ public class Basic_Func
     public float followUpPoint(float cPos,float tarPos,float absSpeed)
     {
         absSpeed = (tarPos>cPos)?absSpeed:-absSpeed;
-
         cPos+=absSpeed;
 
         cPos = ((cPos>tarPos && absSpeed>0) || (cPos<tarPos && absSpeed<0))?tarPos:cPos;
-
         return cPos;
     }
 

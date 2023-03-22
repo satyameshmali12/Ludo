@@ -27,6 +27,7 @@ public class Basic_Piece : Button
     int movingStep = 0;
 
     float speed = 10;
+
     Global_Data data;
 
     Godot.Collections.Array houseEnterZoneRects;
@@ -59,23 +60,19 @@ public class Basic_Piece : Button
     {
         base._Process(delta);
 
+        // GD.Print(speed);
+
         if (!isInHouse)
         {
 
             // for giving the movement to the piece
             // all the data is been taken from the ludo_board class
-            // data.canPlay removed from the below condition oky
             if ((isPressedOverCurRect() || this.Pressed) && this.pieceType == data.currentPlayingType && !data.isPieceTransioning && data.rolledDice != null)
             {
-                int diceVal = data.rolledDice.getRolledValue();
-
-                if (this.canMove(diceVal) && data.currPlayerData.playerType == Player_Type.Non_AI)
-                {
-                    this.move(diceVal);
-                }
+                data.ludoBoard.PlayerMove(this);
             }
 
-            if (isUnlocked && (basf.data.targetPiece == this || data.testingPieces.Contains(this)))
+            if (isUnlocked && (basf.data.targetPiece == this))
             {
 
                 setBackToOrignalStuff();
@@ -88,7 +85,7 @@ public class Basic_Piece : Button
 
                 if (this.RectGlobalPosition == rectPos)
                 {
-                    
+
                     isInHouse = (currentStep == maxMoves);
 
                     if (movingStep > 0)
@@ -104,6 +101,7 @@ public class Basic_Piece : Button
                             basf.data.ludoBoard.next();
                         }
                     }
+                    this.GetParent().GetParent().GetParent().GetParent().GetNode<AudioStreamPlayer2D>("Walk_Tune").Play();
                 }
             }
 
@@ -185,37 +183,23 @@ public class Basic_Piece : Button
     {
         this.RectSize = orgSize;
 
-        ReferenceRect rect = getCurrentRefereceRect();
-        this.RectGlobalPosition = rect.RectGlobalPosition;
+        // ReferenceRect rect = getCurrentRefereceRect();
+        // this.RectGlobalPosition = rect.RectGlobalPosition;
     }
 
 
     public ReferenceRect getCurrentRefereceRect()
     {
-        // GD.Print(System.Reflection.MethodBase.GetCurrentMethod());
-        try
+        ReferenceRect boardRect;
+        if (!isInHouseEnterZone)
         {
-            ReferenceRect boardRect;
-            if (!isInHouseEnterZone)
-            {
-                boardRect = basf.data.boardRects[boardPos - 1] as ReferenceRect;
-            }
-            else
-            {
-                boardRect = houseEnterZoneRects[boardPos - 1] as ReferenceRect;
-            }
-            return boardRect;
+            boardRect = basf.data.boardRects[boardPos - 1] as ReferenceRect;
         }
-        catch (System.Exception ex)
+        else
         {
-            GD.Print(boardPos);
-            GD.Print(pieceType);
-            GD.Print(this);
-            GD.Print(this.Name);
-            GD.Print(isInHouseEnterZone);
-            GD.Print(System.Reflection.MethodBase.GetCurrentMethod());
-            return null;
+            boardRect = houseEnterZoneRects[boardPos - 1] as ReferenceRect;
         }
+        return boardRect;
 
 
     }

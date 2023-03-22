@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Swipe Swoosh Transition Sound Effect for editing_70F
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

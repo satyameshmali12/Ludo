@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Ludo King - Sound ! Notification Tone.mp3-e6cb5753fb
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

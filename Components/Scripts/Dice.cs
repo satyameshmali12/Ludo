@@ -3,7 +3,6 @@ using System;
 
 public class Dice : Node2D
 {
-    float diceRotatingTime = 1f;
     Timer rotationTimer;
     AnimatedSprite diceAnim;
     Basic_Func basf;
@@ -16,7 +15,7 @@ public class Dice : Node2D
 
     public bool isToRollMiserably = false;
 
-    bool isToGiveOne = false;
+    AudioStreamPlayer2D rollTune;
 
     public override void _Ready()
     {
@@ -32,16 +31,14 @@ public class Dice : Node2D
 
         diceRect = this.GetNode<ReferenceRect>("Dice_Rect");
 
+        rollTune = this.GetNode<AudioStreamPlayer2D>("Tune");
+
 
     }
 
     public override void _Process(float delta)
     {
 
-        if (Input.IsActionJustPressed("testing2"))
-        {
-            isToGiveOne = true;
-        }
 
         bool isMouseInsideRect = basf.isMouseInsideRect(diceRect.RectGlobalPosition, diceRect.RectSize, this.GetGlobalMousePosition());
         if ((isMouseInsideRect && Input.IsActionJustPressed("Mouse_Pressed") && diceType == basf.data.currentPlayingType && basf.data.rolledDice == null && !isDiceRolled) || isToRollMiserably)
@@ -59,6 +56,8 @@ public class Dice : Node2D
 
                 diceAnim.Play();
                 rotationTimer.Start();
+                rollTune.Play();
+                
             }
         }
 
@@ -81,16 +80,7 @@ public class Dice : Node2D
 
     public int getRolledValue()
     {
-        // if (isToGiveOne)
-        // {
-        //     return 1;
-        // }
-        // else
-        // {
-        // return 5;
-        return 1;
-        // return (diceAnim.Frame + 1); // 1 added as the indexing starts from the 0th index
-        // }
+        return (diceAnim.Frame + 1); // 1 added as the indexing starts from the 0th index
     }
 
 

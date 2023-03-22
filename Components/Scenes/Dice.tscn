@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Assets/Sprites/DiceSprSheetX48.png" type="Texture" id=1]
 [ext_resource path="res://Components/Scripts/Dice.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Tunes/Dice Roll.mp3" type="AudioStream" id=3]
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
@@ -56,3 +57,6 @@ margin_left = -61.0
 margin_top = -50.5001
 margin_right = 61.0
 margin_bottom = 60.4999
+
+[node name="Tune" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
