@@ -21,13 +21,8 @@ public class Player_Data
         this.dice = dice;
     }
 
-    public void popCrown(List<Player_Data> playersData)
+    public Node2D getHouse()
     {
-        if(isPlayerWin)
-        {
-            Node2D winView = house.GetNode<Node2D>("Win_View"); 
-            winView.Visible = true;
-            winView.GetNode<Label>("Rank").Text = (playersData.IndexOf(this)+1).ToString();
-        }
+        return house;
     }
 }

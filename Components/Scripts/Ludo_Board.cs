@@ -8,73 +8,26 @@ public class Ludo_Board : Basic_Board
 
     public override void _Ready()
     {
+        
+        boardType = Board_Type.Ludo_Board;
+
         base._Ready();
 
         Godot.Collections.Array arr = this.GetNode<Node2D>("Houses").GetChildren();
-        piecesData.Clear();
+
+
         foreach (Node2D house in arr)
         {
             playersData.Add(
                 new Player_Data(house, Player_Type.Non_AI, "hello1", arr.IndexOf(house), house.GetNode<Dice>("Dice"))
             );
-
-            foreach (Node piece in house.GetNode<Node2D>("Pieces").GetChildren())
-            {
-                piece.SetScript(
-                    ResourceLoader.Load<Reference>("res://Base_Classes/Basic_Piece.cs")
-                );
-                piecesData.Add(piece); // collecting all the pieces at one place
-            }
         }
-
-        // playersData[playerPlayingIndex].playerType = Player_Type.Non_AI;
-
-        // basf.data.ludoBoard = this;
-
-        // void addTestPiece(int num, int move, string house)
-        // {
-        //     Basic_Piece bp = this.GetNode<Basic_Piece>($"Houses/{house}/Pieces/{num}");
-        //     bp.isUnlocked = true;
-        //     bp.move(move);
-        //     data.testingPieces.Add(bp);
-        // }
-
-        // addTestPiece(0, 56, "Green");
-        // addTestPiece(1, 56, "Green");
-        // addTestPiece(2, 56, "Green");
-        // addTestPiece(3, 55, "Green");
-
-
-        // addTestPiece(0, 56, "Yellow");
-        // addTestPiece(1, 56, "Yellow");
-        // addTestPiece(2, 56, "Yellow");
-        // addTestPiece(3, 55, "Yellow");
-
-        // addTestPiece(0, 56, "Blue");
-        // addTestPiece(1, 56, "Blue");
-        // addTestPiece(2, 56, "Blue");
-        // addTestPiece(3, 55, "Blue");
-
-        // addTestPiece(0, 56, "Red");
-        // addTestPiece(1, 56, "Red");
-        // addTestPiece(2, 56, "Red");
-        // addTestPiece(3, 55, "Red");
 
     }
 
     public override void _Process(float delta)
     {
-
         base._Process(delta);
-
-        if (Input.IsActionJustPressed("testing"))
-        {
-            data.testingPieces.Clear();
-
-            data.targetPiece = null;
-            data.isPieceTransioning = false;
-        }
-
 
     }
 
@@ -90,7 +43,7 @@ public class Ludo_Board : Basic_Board
         Tuple<Basic_Piece, Basic_Piece> tarAttackPiece = null;
         foreach (Basic_Piece piece in playablePieces)
         {
-            if (piece.getCurrentStep() + diceVal <= piece.transitionAreaLength)
+            if (piece.getCurrentStep() + diceVal <= transitionAreaLength)
             {
                 int pieceNextBoardPos = piece.moveOnBoard(piece.boardPos, dice.getRolledValue());
                 ReferenceRect targetRect = data.boardRects[pieceNextBoardPos - 1] as ReferenceRect;
@@ -117,7 +70,7 @@ public class Ludo_Board : Basic_Board
         List<Basic_Piece> defencingPieces = new List<Basic_Piece>();
         foreach (Basic_Piece piece in playablePieces)
         {
-            if (piece.getCurrentStep() <= piece.transitionAreaLength && piece.getCurrentRefereceRectType() != "checkpoint")
+            if (piece.getCurrentStep() <= transitionAreaLength && piece.getCurrentRefereceRectType() != "checkpoint")
             {
                 for (int i = 1; i <= 6; i++)
                 {
@@ -158,11 +111,51 @@ public class Ludo_Board : Basic_Board
     public override void PlayerMove(Basic_Piece piece)
     {
         base.PlayerMove(piece);
-        
+
         int diceVal = data.rolledDice.getRolledValue();
         if (piece.canMove(diceVal) && data.currPlayerData.playerType == Player_Type.Non_AI)
         {
             piece.move(diceVal);
+        }
+    }
+
+    public override void playerWinAction(Player_Data winPlayer)
+    {
+        base.playerWinAction(winPlayer);
+        Node2D winView = winPlayer.getHouse().GetNode<Node2D>("Win_View");
+        winView.Visible = true;
+        winView.GetNode<Label>("Rank").Text = (playersData.IndexOf(winPlayer) + 1).ToString();
+    }
+
+    public override void nextExtraInnerConfig()
+    {
+        base.nextExtraInnerConfig();
+        if (data.targetPiece != null)
+        {
+            Label targetRectLabel = data.getReferenceRect(data.targetPiece.boardPos).GetNode<Label>("Type");
+            if (targetRectLabel.Text.ToLower() != "checkpoint")
+            {
+                foreach (Basic_Piece piece in piecesData)
+                {
+                    if (
+                        piece.getCurrentBoardPos() == data.targetPiece.getCurrentBoardPos()
+                        &&
+                        piece != data.targetPiece
+                        &&
+                        piece.pieceType != data.targetPiece.pieceType
+                        &&
+                        piece.isUnlocked
+                        &&
+                        !piece.getIsInHouseEnterZone()
+                        )
+                    {
+                        piece.isUnlocked = false;
+                        piece.RectGlobalPosition = piece.startPos;
+                        piece.boardPos = piece.startBoardPos;
+                        piece.isInHouseEnterZone = false;
+                    }
+                }
+            }
         }
     }
 

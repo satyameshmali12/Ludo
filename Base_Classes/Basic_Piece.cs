@@ -9,7 +9,7 @@ public class Basic_Piece : Button
 
     public int boardPos = 1;
     public int startBoardPos = 1;
-    int currentStep = 1;
+    public int currentStep = 1;
 
 
     public bool isUnlocked = false;
@@ -19,10 +19,6 @@ public class Basic_Piece : Button
     public Vector2 startPos;
 
 
-
-    public int transitionAreaLength = 52;
-    public int houseEnterZoneLength = 6;
-    public int maxMoves = 57; // ((trasitionAreaLength + houseEnterZOneLEngth) - 1) (one is subtracted because first position of the piece is not calculated)
 
     int movingStep = 0;
 
@@ -35,6 +31,7 @@ public class Basic_Piece : Button
     Vector2 orgSize;
 
     bool isInHouse = false;
+
 
     public override void _Ready()
     {
@@ -60,7 +57,6 @@ public class Basic_Piece : Button
     {
         base._Process(delta);
 
-        // GD.Print(speed);
 
         if (!isInHouse)
         {
@@ -69,7 +65,7 @@ public class Basic_Piece : Button
             // all the data is been taken from the ludo_board class
             if ((isPressedOverCurRect() || this.Pressed) && this.pieceType == data.currentPlayingType && !data.isPieceTransioning && data.rolledDice != null)
             {
-                data.ludoBoard.PlayerMove(this);
+                data.board.PlayerMove(this);
             }
 
             if (isUnlocked && (basf.data.targetPiece == this))
@@ -86,7 +82,12 @@ public class Basic_Piece : Button
                 if (this.RectGlobalPosition == rectPos)
                 {
 
-                    isInHouse = (currentStep == maxMoves);
+                    isInHouse = (currentStep == data.board.maxMoves);
+                    if (isInHouse)
+                    {
+                        basf.data.board.next();
+                        return;
+                    }
 
                     if (movingStep > 0)
                     {
@@ -98,10 +99,16 @@ public class Basic_Piece : Button
                     {
                         if (data.targetPiece == this)
                         {
-                            basf.data.ludoBoard.next();
+                            int boardPosBef = boardPos;
+                            basf.data.board.pieceReachedTargetLocationAction(this);
+                            // checking whether the above function has alter the position or not
+                            // if so then not changing the die
+                            if (boardPos == boardPosBef)
+                            {
+                                basf.data.board.next();
+                            }
                         }
                     }
-                    this.GetParent().GetParent().GetParent().GetParent().GetNode<AudioStreamPlayer2D>("Walk_Tune").Play();
                 }
             }
 
@@ -112,7 +119,7 @@ public class Basic_Piece : Button
 
     public bool canMove(int stepIncre)
     {
-        return (((currentStep + stepIncre) <= maxMoves) && (isUnlocked || stepIncre == 6));
+        return (((currentStep + stepIncre) <= data.board.maxMoves) && (isUnlocked || stepIncre == 6));
     }
 
     public void move(int movingStep)
@@ -139,18 +146,19 @@ public class Basic_Piece : Button
     public int moveOnBoard(int currentBoardPos, int increment = 1)
     {
         currentBoardPos += increment;
+        int tAreaLen = data.board.transitionAreaLength;
 
-        if (currentBoardPos > transitionAreaLength)
+        if (currentBoardPos > tAreaLen)
         {
-            currentBoardPos = currentBoardPos - transitionAreaLength;
+            currentBoardPos = currentBoardPos - tAreaLen;
         }
 
         else if (currentBoardPos < 1)
         {
-            currentBoardPos = transitionAreaLength - Math.Abs(currentBoardPos);
+            currentBoardPos = tAreaLen - Math.Abs(currentBoardPos);
         }
 
-        if (currentStep > transitionAreaLength - 1 && !isInHouseEnterZone)
+        if (currentStep > tAreaLen - 1 && !isInHouseEnterZone && data.board.houseEnterZoneLength > 0)
         {
             currentBoardPos = 1;
             isInHouseEnterZone = true;
@@ -182,9 +190,6 @@ public class Basic_Piece : Button
     public void setBackToOrignalStuff()
     {
         this.RectSize = orgSize;
-
-        // ReferenceRect rect = getCurrentRefereceRect();
-        // this.RectGlobalPosition = rect.RectGlobalPosition;
     }
 
 

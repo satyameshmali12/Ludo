@@ -55,7 +55,7 @@ public class Basic_Func
 
     public int minMaxer(int num,int max,int min)
     {
-        return (num>max)?max:(num<min)?min:num;
+        return (num>max)?num%max:(num<min)?-num%max:num;
     }
 
     

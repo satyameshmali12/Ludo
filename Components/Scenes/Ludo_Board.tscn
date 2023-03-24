@@ -16,12 +16,13 @@ texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 500, 500 )
 
 [node name="Ludo_Board" type="Node2D"]
+position = Vector2( 0, -8 )
 script = ExtResource( 3 )
 
 [node name="WhiteBg" type="Sprite" parent="."]
 modulate = Color( 0.0862745, 0.470588, 0.490196, 1 )
-position = Vector2( 536, 340 )
-scale = Vector2( 2.46413, 2.79699 )
+position = Vector2( 500, 347 )
+scale = Vector2( 2.5954, 2.79699 )
 texture = ExtResource( 8 )
 
 [node name="Sprites" type="Node2D" parent="."]
@@ -46,7 +47,7 @@ __meta__ = {
 
 [node name="Type" type="Label" parent="Rects/1"]
 visible = false
-margin_right = 40.0
+margin_right = 71.0
 margin_bottom = 14.0
 text = "CheckPoint"
 

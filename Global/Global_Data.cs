@@ -12,7 +12,7 @@ public class Global_Data:Node
     public Godot.Collections.Array allRects;
     public Basic_Piece targetPiece = null;
     public ArrayList testingPieces = new ArrayList();
-    public Basic_Board ludoBoard = null;
+    public Basic_Board board = null;
     public Player_Data currPlayerData = null;
     public bool canPlay = false;
 

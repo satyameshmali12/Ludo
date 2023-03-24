@@ -11,7 +11,7 @@ public class Dice : Node2D
 
     bool isDiceRolled = false;
 
-    string diceType;
+    public string diceType;
 
     public bool isToRollMiserably = false;
 
@@ -41,7 +41,7 @@ public class Dice : Node2D
 
 
         bool isMouseInsideRect = basf.isMouseInsideRect(diceRect.RectGlobalPosition, diceRect.RectSize, this.GetGlobalMousePosition());
-        if ((isMouseInsideRect && Input.IsActionJustPressed("Mouse_Pressed") && diceType == basf.data.currentPlayingType && basf.data.rolledDice == null && !isDiceRolled) || isToRollMiserably)
+        if ((isMouseInsideRect && Input.IsActionJustPressed("Mouse_Pressed") && (diceType == basf.data.currentPlayingType || diceType.ToLower()=="universal") && basf.data.rolledDice == null && !isDiceRolled) && basf.data.currPlayerData.playerType==Player_Type.Non_AI || isToRollMiserably)
         {
             if (rotationTimer.IsStopped())
             {
@@ -81,6 +81,11 @@ public class Dice : Node2D
     public int getRolledValue()
     {
         return (diceAnim.Frame + 1); // 1 added as the indexing starts from the 0th index
+    }
+
+    public void makeUniversal()
+    {
+        diceType = "Universal";
     }
 
 

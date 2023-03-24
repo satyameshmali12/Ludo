@@ -5,20 +5,30 @@ using System.Collections;
 
 public class Basic_Board : Node2D
 {
+    public Board_Type boardType;
     AudioStreamPlayer2D startMusic;
-
     public List<Node> piecesData = new List<Node>();
     public List<Player_Data> playersData = new List<Player_Data>();
     public int playerPlayingIndex = 0;
-    public bool isDiceRolled;
-    // bool canPlay;
     public Basic_Func basf;
     public Global_Data data;
-    public int movingStep = 0;
-
     public List<Player_Data> winPlayerData = new List<Player_Data>();
 
 
+    public int transitionAreaLength = 52;
+    public int houseEnterZoneLength = 6;
+    public int maxMoves = 57; // ((trasitionAreaLength + houseEnterZOneLEngth) - 1) (one is subtracted because first position of the piece is not calculated)
+    public int singHousePieceCount = 4;
+
+    bool isFirstRender = true;
+
+    public void configure(int transitionAreaLength, int houseEnterZoneLength, int maxMoves, int singHousePieceCount)
+    {
+        this.transitionAreaLength = transitionAreaLength;
+        this.houseEnterZoneLength = houseEnterZoneLength;
+        this.maxMoves = maxMoves;
+        this.singHousePieceCount = singHousePieceCount;
+    }
 
     public override void _Ready()
     {
@@ -41,11 +51,8 @@ public class Basic_Board : Node2D
         Godot.Collections.Array arr = this.GetNode<Node2D>("Houses").GetChildren();
         foreach (Node2D house in arr)
         {
-            foreach (Node piece in house.GetNode<Node2D>("Pieces").GetChildren())
+            foreach (Basic_Piece piece in house.GetNode<Node2D>("Pieces").GetChildren())
             {
-                piece.SetScript(
-                    ResourceLoader.Load<Reference>("res://Base_Classes/Basic_Piece.cs")
-                );
                 piecesData.Add(piece); // collecting all the pieces at one place
             }
         }
@@ -53,12 +60,19 @@ public class Basic_Board : Node2D
         startMusic = this.GetNode<AudioStreamPlayer2D>("Start_Music");
         startMusic.Play();
 
-        basf.data.ludoBoard = this;
+        basf.data.board = this;
 
     }
+
+
     public override void _Process(float delta)
     {
 
+        if (isFirstRender)
+        {
+            setPieceSizes();
+            isFirstRender = false;
+        }
 
         Player_Data pData = playersData[playerPlayingIndex];
         data.currentPlayingType = pData.pieceType;
@@ -71,7 +85,7 @@ public class Basic_Board : Node2D
                 Dice dice = data.rolledDice;
                 if (dice.getIsDiceRolled())
                 {
-                    movingStep = dice.getRolledValue();
+                    int movingStep = dice.getRolledValue();
 
                     ArrayList allPiecesOfCurrentType = new ArrayList();
                     List<Basic_Piece> playablePieces = new List<Basic_Piece>();
@@ -92,19 +106,24 @@ public class Basic_Board : Node2D
                             playablePieces.Add(piece);
                         }
                     }
+
                     // passing the current player die if the playble piece for the specific house is zero
-                    if (playablePieces.Count == 0)
+                    if (playablePieces.Count == 0 || (playablePieces.Count == 1 && !playablePieces[0].canMove(dice.getRolledValue())))
+                    // if(playablePieces.Count==0)
                     {
                         next();
                         return;
                     }
 
-                    // for AI
-                    if (pData.playerType == Player_Type.AI)
+                    else if (playablePieces.Count == 1)
                     {
+                        playablePieces[0].move(dice.getRolledValue());
+                    }
 
+                    // for AI
+                    else if (pData.playerType == Player_Type.AI)
+                    {
                         AIMove(dice, playablePieces);
-
                     }
 
                 }
@@ -122,39 +141,77 @@ public class Basic_Board : Node2D
         }
     }
 
-
+    public virtual void pieceReachedTargetLocationAction(Basic_Piece piece) { }
     public void next(bool isManuallyCalled = false)
     {
 
         if (data.targetPiece != null)
         {
-            Label targetRectLabel = data.getReferenceRect(data.targetPiece.boardPos).GetNode<Label>("Type");
-            if (targetRectLabel.Text.ToLower() != "checkpoint")
+            nextExtraInnerConfig();
+
+            int inHouseCount = 0;
+
+            foreach (Basic_Piece piece in data.targetPiece.GetParent().GetChildren())
             {
-                foreach (Basic_Piece piece in piecesData)
+                if (piece.getIsWin())
                 {
-                    if (
-                        piece.getCurrentBoardPos() == data.targetPiece.getCurrentBoardPos()
-                        &&
-                        piece != data.targetPiece
-                        &&
-                        piece.pieceType != data.targetPiece.pieceType
-                        &&
-                        piece.isUnlocked
-                        &&
-                        !piece.getIsInHouseEnterZone()
-                        )
-                    {
-                        piece.isUnlocked = false;
-                        piece.RectGlobalPosition = piece.startPos;
-                        piece.boardPos = piece.startBoardPos;
-                        piece.isInHouseEnterZone = false;
-                    }
+                    inHouseCount++;
                 }
+            }
+
+            // making the player win and poping the crown if all the 4 pieces reached the main point
+            if (inHouseCount == singHousePieceCount && !winPlayerData.Contains(playersData[playerPlayingIndex]))
+            {
+                Player_Data pData = playersData[playerPlayingIndex];
+                pData.isPlayerWin = true;
+                winPlayerData.Add(pData);
+                playerWinAction(pData);
             }
         }
 
+        if (data.rolledDice != null)
+        {
+            if (data.rolledDice.getRolledValue() != 6)
+            {
+                playerPlayingIndex++;
+                if (playerPlayingIndex > 3)
+                {
+                    playerPlayingIndex = 0;
+                }
+            }
+            data.rolledDice.setDiceRolled(false);
+            data.rolledDice = null;
+        }
 
+        data.isPieceTransioning = false;
+        data.targetPiece = null;
+        setPieceSizes();
+    }
+    public virtual void AIMove(Dice dice, List<Basic_Piece> playablePieces) { }
+    public virtual void PlayerMove(Basic_Piece piece) { }
+    public virtual void playerWinAction(Player_Data winPlayer) { }
+    public virtual void nextExtraInnerConfig() { }
+    public Basic_Piece getConditionalPiece(Basic_Piece piece, ReferenceRect targetRect, bool isToConCheckPoint = true)
+    {
+
+        foreach (Basic_Piece tarPiece in piecesData)
+        {
+            if (
+                tarPiece.getCurrentRefereceRect() == targetRect
+                &&
+                tarPiece.pieceType != piece.pieceType
+                &&
+                (targetRect.GetNode<Label>("Type").Text.ToLower() != "checkpoint" || !isToConCheckPoint)
+               )
+            {
+                return tarPiece;
+            }
+        }
+
+        return null;
+    }
+    public void setPieceSizes()
+    {
         foreach (ReferenceRect rect in data.allRects)
         {
 
@@ -162,13 +219,13 @@ public class Basic_Board : Node2D
 
             foreach (Basic_Piece piece in piecesData)
             {
-                if (rect == piece.getCurrentRefereceRect() && piece.isUnlocked)
+                if (rect == piece.getCurrentRefereceRect() && (piece.isUnlocked || boardType!=Board_Type.Ludo_Board))
                 {
                     specRectPieces.Add(piece);
                 }
             }
 
-            if (specRectPieces.Count > 1)
+            if (specRectPieces.Count > 0)
             {
                 Vector2 refRectSize = rect.RectSize;
 
@@ -189,7 +246,6 @@ public class Basic_Board : Node2D
                 {
 
                     int pieceIndex = (specRectPieces.IndexOf(piece) + 1);
-
                     piece.RectSize = new Vector2(xIncrement, yIncrement);
                     inLinePieces.Add(piece);
 
@@ -212,88 +268,9 @@ public class Basic_Board : Node2D
                     }
 
                 }
-
-            }
-            else
-            {
-                foreach (Basic_Piece piece in specRectPieces)
-                {
-                    piece.setBackToOrignalStuff();
-                }
             }
 
         }
-
-        if (data.targetPiece != null)
-        {
-
-            int inHouseCount = 0;
-
-            foreach (Basic_Piece piece in data.targetPiece.GetParent().GetChildren())
-            {
-                if (piece.getIsWin())
-                {
-                    inHouseCount++;
-                }
-            }
-
-
-            // making the player win and poping the crown if all the 4 pieces reached the main point
-            if (inHouseCount == 4 && !winPlayerData.Contains(playersData[playerPlayingIndex]))
-            {
-                Player_Data pData = playersData[playerPlayingIndex];
-                pData.isPlayerWin = true;
-                winPlayerData.Add(pData);
-                pData.popCrown(playersData);
-            }
-        }
-
-
-        if (data.rolledDice != null)
-        {
-            if (data.rolledDice.getRolledValue() != 6)
-            {
-                playerPlayingIndex++;
-                if (playerPlayingIndex > 3)
-                {
-                    playerPlayingIndex = 0;
-                }
-            }
-            data.rolledDice.setDiceRolled(false);
-            data.rolledDice = null;
-            data.isPieceTransioning = false;
-            data.targetPiece = null;
-        }
-
-    }
-
-    public virtual void AIMove(Dice dice, List<Basic_Piece> playablePieces)
-    {
-
-    }
-    public virtual void PlayerMove(Basic_Piece piece)
-    {
-
-    }
-
-    public Basic_Piece getConditionalPiece(Basic_Piece piece, ReferenceRect targetRect, bool isToConCheckPoint = true)
-    {
-
-        foreach (Basic_Piece tarPiece in piecesData)
-        {
-            if (
-                tarPiece.getCurrentRefereceRect() == targetRect
-                &&
-                tarPiece.pieceType != piece.pieceType
-                &&
-                (targetRect.GetNode<Label>("Type").Text.ToLower() != "checkpoint" || !isToConCheckPoint)
-               )
-            {
-                return tarPiece;
-            }
-        }
-
-        return null;
 
     }
 }
