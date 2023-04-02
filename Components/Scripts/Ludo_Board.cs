@@ -8,21 +8,14 @@ public class Ludo_Board : Basic_Board
 
     public override void _Ready()
     {
+
         
         boardType = Board_Type.Ludo_Board;
 
         base._Ready();
 
         Godot.Collections.Array arr = this.GetNode<Node2D>("Houses").GetChildren();
-
-
-        foreach (Node2D house in arr)
-        {
-            playersData.Add(
-                new Player_Data(house, Player_Type.Non_AI, "hello1", arr.IndexOf(house), house.GetNode<Dice>("Dice"))
-            );
-        }
-
+        
     }
 
     public override void _Process(float delta)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Assets/Sprites/whiteBg.jpg" type="Texture" id=1]
 [ext_resource path="res://Assets/Sprites/Snake_Board.jpg" type="Texture" id=2]
@@ -13,7 +13,9 @@
 [ext_resource path="res://Assets/Sprites/crown.png" type="Texture" id=11]
 [ext_resource path="res://Assets/Fonts/Crazy.tres" type="DynamicFont" id=12]
 [ext_resource path="res://Components/Scenes/Pause_Menu.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Assets/Sprites/lockImage.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Sprites/Lock_Image.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Sprites/setting_icon.png" type="Texture" id=15]
+[ext_resource path="res://Components/Scenes/Win_Screen.tscn" type="PackedScene" id=16]
 
 [sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.352941, 0.360784, 0, 1 )
@@ -64,6 +66,15 @@ corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 980, 982 )
+modulate_color = Color( 0.152941, 0.901961, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 980, 982 )
 
 [node name="Snake_Board" type="Node2D"]
 position = Vector2( 4, 2 )
@@ -1732,3 +1743,16 @@ valign = 1
 [node name="Pause_Menu" parent="." instance=ExtResource( 13 )]
 visible = false
 position = Vector2( 426, 316 )
+
+[node name="Pause_Button" type="Button" parent="."]
+margin_left = 938.0
+margin_top = 602.0
+margin_right = 994.0
+margin_bottom = 654.0
+custom_styles/hover = SubResource( 8 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/normal = SubResource( 9 )
+
+[node name="Win_Screen" parent="." instance=ExtResource( 16 )]
+visible = false
+position = Vector2( 46, 67 )

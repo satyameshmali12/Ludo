@@ -68,7 +68,7 @@ public class Basic_Piece : Button
                 data.board.PlayerMove(this);
             }
 
-            if (isUnlocked && (basf.data.targetPiece == this))
+            if (isUnlocked && (basf.data.targetPiece == this) || basf.data.testingPieces.Contains(this))
             {
 
                 setBackToOrignalStuff();

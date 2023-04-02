@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Lo"
-run/main_scene="res://Components/Scenes/Snake_Board.tscn"
+run/main_scene="res://Components/Scenes/Home.tscn"
 config/icon="res://icon.png"
 
 [autoload]

@@ -15,21 +15,15 @@ public class Snake_Board : Basic_Board
         boardType = Board_Type.Snake_Board;
 
         base._Ready();
+
         Godot.Collections.Array arr = this.GetNode<Node2D>("Houses").GetChildren();
 
 
-        foreach (Node2D house in arr)
-        {
-            playersData.Add(
-                new Player_Data(house, Player_Type.Non_AI, "hello1", arr.IndexOf(house), this.GetNode<Dice>("Dice"))
-            );
-        }
-
         configure(100, 0, 100, 1);
-        
-        Dictionary<string,string> getDataDic(int start,int end,string type)
+
+        Dictionary<string, string> getDataDic(int start, int end, string type)
         {
-            return new Dictionary<string,string>(){{"start",start.ToString()},{"end",end.ToString()},{"name",type}};
+            return new Dictionary<string, string>() { { "start", start.ToString() }, { "end", end.ToString() }, { "name", type } };
         }
 
         boardData = new ArrayList()
@@ -54,13 +48,12 @@ public class Snake_Board : Basic_Board
     {
         base._Process(delta);
 
-        foreach (Label lab in this.GetNode("Current_Die_Display").GetChildren())
-        {
-            lab.Visible = (lab.Name.ToLower()==data.currentPlayingType.ToLower());
-            lab.Text = data.currentPlayingType;
-        }
+    }
 
-        if(data.targetPiece!=null)
+    public override void processExtension()
+    {
+        base.processExtension();
+        if (data.targetPiece != null)
         {
             data.targetPiece.GetParent().GetParent().GetNode<Sprite>("Lock_Bg").Visible = !data.targetPiece.isUnlocked;
         }
@@ -68,9 +61,9 @@ public class Snake_Board : Basic_Board
 
     public override void pieceReachedTargetLocationAction(Basic_Piece piece)
     {
-        foreach (Dictionary<string,string> dic in boardData)
+        foreach (Dictionary<string, string> dic in boardData)
         {
-            if(dic["name"].ToLower()=="transition" && piece.boardPos==int.Parse(dic["start"]))
+            if (dic["name"].ToLower() == "transition" && piece.boardPos == int.Parse(dic["start"]))
             {
                 piece.boardPos = int.Parse(dic["end"]);
                 piece.currentStep = int.Parse(dic["end"]);
@@ -78,12 +71,12 @@ public class Snake_Board : Basic_Board
             }
         }
     }
-    
-    public override void playerWinAction(Player_Data winPlayer) 
+
+    public override void playerWinAction(Player_Data winPlayer)
     {
         Node2D house = winPlayer.getHouse();
         house.GetNode<Node2D>("Win_Condition").Visible = true;
-        house.GetNode<Label>("Win_Condition/Rank").Text = (winPlayerData.IndexOf(winPlayer)+1).ToString();
+        house.GetNode<Label>("Win_Condition/Rank").Text = (winPlayerData.IndexOf(winPlayer) + 1).ToString();
     }
 
 
