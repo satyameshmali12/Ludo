@@ -10,9 +10,9 @@ config_version=4
 
 [application]
 
-config/name="Lo"
+config/name="_LODU_"
 run/main_scene="res://Components/Scenes/Home.tscn"
-config/icon="res://icon.png"
+config/icon="res://Assets/Sprites/Ludo_Home_Icon.png"
 
 [autoload]
 
