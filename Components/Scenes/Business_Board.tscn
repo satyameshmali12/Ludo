@@ -1,0 +1,762 @@
+[gd_scene load_steps=42 format=2]
+
+[ext_resource path="res://Assets/Sprites/Famous_Places/Aksa_Beach.png" type="Texture" id=1]
+[ext_resource path="res://Components/Scenes/Win_Screen.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Tunes/Swipe Swoosh Transition Sound Effect for editing_70FC48uPcBE.mp3" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Tunes/Ludo King - Sound ! Notification Tone.mp3" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Andaman And Nicobar.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprites/Famous_Places/ChhatrapatiShivajiMaharahTerminus.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Chowpatty_Beach.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprites/Famous_Places/QuestionMark.jpg" type="Texture" id=8]
+[ext_resource path="res://Assets/Sprites/Famous_Places/startimage.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Jail.jpg" type="Texture" id=10]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Corcovado_Mountain.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Sprites/Famous_Places/GateWayImage.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Sprites/Famous_Places/garage.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Elephant_Caves.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Sprites/Famous_Places/GYM.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Rest_House.jpg" type="Texture" id=16]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Himalaya.png" type="Texture" id=17]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Jaipur.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Karnataka.png" type="Texture" id=19]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Kashmir.png" type="Texture" id=20]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Gift.jpg" type="Texture" id=21]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Nagpur.png" type="Texture" id=22]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Thane_Creek.png" type="Texture" id=23]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Otty.png" type="Texture" id=24]
+[ext_resource path="res://Assets/Sprites/Famous_Places/TajMahal.png" type="Texture" id=25]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Railway.png" type="Texture" id=26]
+[ext_resource path="res://Assets/Sprites/Famous_Places/Party.webp" type="Texture" id=27]
+[ext_resource path="res://Assets/Sprites/setting_icon.png" type="Texture" id=28]
+[ext_resource path="res://Business_Board_Stuff/Scripts/Business_Board.cs" type="Script" id=29]
+[ext_resource path="res://Components/Scenes/Dice.tscn" type="PackedScene" id=30]
+[ext_resource path="res://Components/Scenes/Pause_Menu.tscn" type="PackedScene" id=31]
+[ext_resource path="res://Business_Board_Stuff/Scripts/Ticket.cs" type="Script" id=32]
+[ext_resource path="res://Assets/Sprites/Piece.png" type="Texture" id=33]
+[ext_resource path="res://Business_Board_Stuff/Scripts/Business_Board_Piece.cs" type="Script" id=34]
+[ext_resource path="res://Assets/Sprites/whiteBg.jpg" type="Texture" id=35]
+[ext_resource path="res://Business_Board_Stuff/Scenes/BS_Panel.tscn" type="PackedScene" id=36]
+[ext_resource path="res://Components/Scenes/Notification.tscn" type="PackedScene" id=37]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.12549, 0.0784314, 0.294118, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 33 )
+region_rect = Rect2( 0, 0, 500, 500 )
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 28 )
+region_rect = Rect2( 0, 0, 980, 982 )
+modulate_color = Color( 0.152941, 0.901961, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 28 )
+region_rect = Rect2( 0, 0, 980, 982 )
+
+[node name="Business_Board" type="Node2D"]
+script = ExtResource( 29 )
+
+[node name="WhiteBg" type="Sprite" parent="."]
+modulate = Color( 0.137255, 0.258824, 0.435294, 1 )
+position = Vector2( 506, 353 )
+scale = Vector2( 2.25738, 2.72932 )
+texture = ExtResource( 35 )
+
+[node name="Win_Screen" parent="." instance=ExtResource( 2 )]
+visible = false
+position = Vector2( 56, 72 )
+
+[node name="Start_Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+
+[node name="Walk_Tune" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 1, 56 )
+stream = ExtResource( 3 )
+
+[node name="Rects" type="Node2D" parent="."]
+position = Vector2( -81, 28 )
+
+[node name="0" type="ReferenceRect" parent="Rects"]
+margin_left = 819.0
+margin_top = 36.0
+margin_right = 889.0
+margin_bottom = 113.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/0"]
+visible = false
+margin_left = 81.0
+margin_top = 68.0
+margin_right = 141.0
+margin_bottom = 87.0
+rect_rotation = -91.3525
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Start"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="1" type="ReferenceRect" parent="Rects"]
+margin_left = 821.0
+margin_top = 116.0
+margin_right = 891.0
+margin_bottom = 193.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/1"]
+visible = false
+margin_left = 77.0
+margin_top = 79.0
+margin_right = 159.0
+margin_bottom = 98.0
+rect_rotation = -91.3525
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "AksaBeach"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="2" type="ReferenceRect" parent="Rects"]
+margin_left = 820.0
+margin_top = 200.0
+margin_right = 890.0
+margin_bottom = 277.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/2"]
+visible = false
+margin_left = 172.0
+margin_top = 222.0
+margin_right = 322.0
+margin_bottom = 241.0
+rect_rotation = -91.3525
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "AndamanAndNicobar"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="3" type="ReferenceRect" parent="Rects"]
+margin_left = 820.0
+margin_top = 286.0
+margin_right = 890.0
+margin_bottom = 363.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/3"]
+visible = false
+margin_left = 75.0
+margin_top = 1.0
+margin_right = 185.0
+margin_bottom = 20.0
+rect_rotation = -91.3525
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "CSM_Terminus"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="4" type="ReferenceRect" parent="Rects"]
+margin_left = 820.0
+margin_top = 369.0
+margin_right = 890.0
+margin_bottom = 446.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/4"]
+visible = false
+margin_left = 164.0
+margin_top = 25.0
+margin_right = 286.0
+margin_bottom = 44.0
+rect_rotation = -91.3525
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Chowpatty_Beach"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="5" type="ReferenceRect" parent="Rects"]
+margin_left = 820.0
+margin_top = 455.0
+margin_right = 890.0
+margin_bottom = 532.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/5"]
+visible = false
+margin_left = 102.541
+margin_top = 29.4318
+margin_right = 157.541
+margin_bottom = 48.4318
+rect_rotation = -91.3525
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Parady"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="6" type="ReferenceRect" parent="Rects"]
+margin_left = 820.0
+margin_top = 537.0
+margin_right = 890.0
+margin_bottom = 614.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/6"]
+visible = false
+margin_left = 102.541
+margin_top = 29.4318
+margin_right = 142.541
+margin_bottom = 48.4318
+rect_rotation = -91.3525
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Jail"
+
+[node name="7" type="ReferenceRect" parent="Rects"]
+margin_left = 734.0
+margin_top = 536.0
+margin_right = 817.0
+margin_bottom = 613.0
+
+[node name="Name" type="Label" parent="Rects/7"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Corcovado_Mountain"
+
+[node name="8" type="ReferenceRect" parent="Rects"]
+margin_left = 652.0
+margin_top = 536.0
+margin_right = 735.0
+margin_bottom = 613.0
+
+[node name="Name" type="Label" parent="Rects/8"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Elephanta_Caves"
+
+[node name="9" type="ReferenceRect" parent="Rects"]
+margin_left = 569.0
+margin_top = 537.0
+margin_right = 652.0
+margin_bottom = 614.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/9"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Garage"
+
+[node name="10" type="ReferenceRect" parent="Rects"]
+margin_left = 486.0
+margin_top = 535.0
+margin_right = 569.0
+margin_bottom = 612.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/10"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Gateway_of_India"
+
+[node name="11" type="ReferenceRect" parent="Rects"]
+margin_left = 402.0
+margin_top = 534.0
+margin_right = 485.0
+margin_bottom = 611.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/11"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Himalaya"
+
+[node name="12" type="ReferenceRect" parent="Rects"]
+margin_left = 325.0
+margin_top = 534.0
+margin_right = 400.0
+margin_bottom = 611.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/12"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Rest_House"
+
+[node name="13" type="ReferenceRect" parent="Rects"]
+margin_left = 327.0
+margin_top = 450.0
+margin_right = 402.0
+margin_bottom = 532.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/13"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "GYM"
+
+[node name="14" type="ReferenceRect" parent="Rects"]
+margin_left = 328.0
+margin_top = 366.0
+margin_right = 403.0
+margin_bottom = 448.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/14"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Jaipur"
+
+[node name="15" type="ReferenceRect" parent="Rects"]
+margin_left = 328.0
+margin_top = 281.0
+margin_right = 403.0
+margin_bottom = 363.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/15"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Karnataka"
+
+[node name="16" type="ReferenceRect" parent="Rects"]
+margin_left = 330.0
+margin_top = 196.0
+margin_right = 405.0
+margin_bottom = 278.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/16"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Surprise"
+
+[node name="17" type="ReferenceRect" parent="Rects"]
+margin_left = 332.0
+margin_top = 114.0
+margin_right = 403.0
+margin_bottom = 196.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/17"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Otty"
+
+[node name="18" type="ReferenceRect" parent="Rects"]
+margin_left = 333.0
+margin_top = 45.0
+margin_right = 401.0
+margin_bottom = 113.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/18"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Party"
+
+[node name="19" type="ReferenceRect" parent="Rects"]
+margin_left = 404.0
+margin_top = 44.0
+margin_right = 486.0
+margin_bottom = 112.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/19"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Nagpur"
+
+[node name="20" type="ReferenceRect" parent="Rects"]
+margin_left = 487.0
+margin_top = 44.0
+margin_right = 569.0
+margin_bottom = 112.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/20"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Kashmir"
+
+[node name="21" type="ReferenceRect" parent="Rects"]
+margin_left = 570.0
+margin_top = 44.0
+margin_right = 652.0
+margin_bottom = 112.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/21"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Railway"
+
+[node name="22" type="ReferenceRect" parent="Rects"]
+margin_left = 653.0
+margin_top = 44.0
+margin_right = 735.0
+margin_bottom = 112.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/22"]
+visible = false
+margin_left = 4.0
+margin_top = -29.0
+margin_right = 74.0
+margin_bottom = -10.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "TajMahal"
+
+[node name="23" type="ReferenceRect" parent="Rects"]
+margin_left = 739.0
+margin_top = 43.0
+margin_right = 821.0
+margin_bottom = 111.0
+script = ExtResource( 32 )
+
+[node name="Name" type="Label" parent="Rects/23"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Thane_Creek"
+
+[node name="Rect_Preivews" type="Node2D" parent="."]
+position = Vector2( -59, 18 )
+
+[node name="AksaBeach" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 832, 164 )
+rotation = -1.57079
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 1 )
+
+[node name="AndamanAndNicobar" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 832, 247 )
+rotation = -1.5708
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 5 )
+
+[node name="ChhatrapatiShivajiMaharahTerminus" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 832, 332 )
+rotation = -1.5708
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 6 )
+
+[node name="Chowpatty_Beach" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 832, 417 )
+rotation = -1.5708
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 7 )
+
+[node name="Question_Mark" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 832, 502 )
+rotation = -1.5708
+scale = Vector2( 0.0306117, 0.0335175 )
+texture = ExtResource( 8 )
+
+[node name="Start" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 832, 84.2281 )
+rotation = -1.5708
+scale = Vector2( 0.629531, 0.7 )
+texture = ExtResource( 9 )
+
+[node name="jail" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 832, 584 )
+scale = Vector2( 0.0875, 0.093 )
+texture = ExtResource( 10 )
+
+[node name="CorcovadoMountain" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 754, 584.5 )
+scale = Vector2( 0.7, 0.73 )
+texture = ExtResource( 11 )
+
+[node name="Elphanta_Caves" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 670, 585 )
+scale = Vector2( 0.7, 0.73 )
+texture = ExtResource( 14 )
+
+[node name="Garage" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 589, 583 )
+scale = Vector2( 0.7, 0.73 )
+texture = ExtResource( 13 )
+
+[node name="Gate_Way_Of_India" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 505, 583 )
+scale = Vector2( 0.7, 0.73 )
+texture = ExtResource( 12 )
+
+[node name="GYM" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 341.369, 501.053 )
+rotation = 1.5708
+scale = Vector2( 0.715776, 0.712621 )
+texture = ExtResource( 15 )
+
+[node name="Farm_House" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 341, 582 )
+rotation = 1.5708
+scale = Vector2( 0.0592102, 0.103402 )
+texture = ExtResource( 16 )
+
+[node name="Himalaya" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 421, 583 )
+scale = Vector2( 0.7, 0.73 )
+texture = ExtResource( 17 )
+
+[node name="Jaipur" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 341, 416 )
+rotation = 1.5708
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 18 )
+
+[node name="Karnataka" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 344, 331 )
+rotation = 1.5708
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 19 )
+
+[node name="Nagpur" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 423, 87 )
+rotation = -3.14159
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 22 )
+
+[node name="Surprise" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 345.086, 247.178 )
+rotation = 1.5708
+scale = Vector2( 0.171317, 0.170202 )
+texture = ExtResource( 21 )
+
+[node name="Otty" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 345, 164 )
+rotation = 1.5708
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 24 )
+
+[node name="Railway" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 505.665, 87 )
+rotation = -3.14159
+scale = Vector2( 0.677747, 0.7 )
+texture = ExtResource( 20 )
+
+[node name="TajMahal" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 673, 84 )
+rotation = -3.14159
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 25 )
+
+[node name="Thana_Creek" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 756.33, 85 )
+rotation = -3.14159
+scale = Vector2( 0.655493, 0.7 )
+texture = ExtResource( 23 )
+
+[node name="Party" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 346, 87.2311 )
+rotation = -3.14159
+scale = Vector2( 0.110488, 0.173827 )
+texture = ExtResource( 27 )
+
+[node name="Kashmir" type="Sprite" parent="Rect_Preivews"]
+position = Vector2( 589, 86 )
+rotation = 3.14159
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 26 )
+
+[node name="Dice" parent="." instance=ExtResource( 30 )]
+position = Vector2( 938, 328 )
+scale = Vector2( 0.3, 0.3 )
+
+[node name="Houses" type="Node2D" parent="."]
+position = Vector2( 551, -433 )
+
+[node name="Green" type="Node2D" parent="Houses"]
+
+[node name="House_Enter_Zone" type="Node2D" parent="Houses/Green"]
+
+[node name="Start_Board_Pos" type="Label" parent="Houses/Green"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+text = "1"
+
+[node name="Pieces" type="Node2D" parent="Houses/Green"]
+
+[node name="0" type="Button" parent="Houses/Green/Pieces"]
+modulate = Color( 0, 1, 0.439216, 1 )
+margin_left = 206.0
+margin_top = 515.0
+margin_right = 242.0
+margin_bottom = 547.0
+custom_styles/normal = SubResource( 2 )
+script = ExtResource( 34 )
+
+[node name="Camera2D" type="Camera2D" parent="Houses/Green/Pieces/0"]
+position = Vector2( 18, 18 )
+zoom = Vector2( 0.4, 0.5 )
+smoothing_enabled = true
+
+[node name="Yellow" type="Node2D" parent="Houses"]
+
+[node name="House_Enter_Zone" type="Node2D" parent="Houses/Yellow"]
+
+[node name="Start_Board_Pos" type="Label" parent="Houses/Yellow"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+text = "1"
+
+[node name="Pieces" type="Node2D" parent="Houses/Yellow"]
+
+[node name="0" type="Button" parent="Houses/Yellow/Pieces"]
+modulate = Color( 0.94902, 1, 0, 1 )
+margin_left = 206.0
+margin_top = 515.0
+margin_right = 242.0
+margin_bottom = 547.0
+custom_styles/normal = SubResource( 2 )
+script = ExtResource( 34 )
+
+[node name="Camera2D" type="Camera2D" parent="Houses/Yellow/Pieces/0"]
+position = Vector2( 18, 18 )
+zoom = Vector2( 0.4, 0.5 )
+smoothing_enabled = true
+
+[node name="Blue" type="Node2D" parent="Houses"]
+
+[node name="House_Enter_Zone" type="Node2D" parent="Houses/Blue"]
+
+[node name="Start_Board_Pos" type="Label" parent="Houses/Blue"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+text = "1"
+
+[node name="Pieces" type="Node2D" parent="Houses/Blue"]
+
+[node name="0" type="Button" parent="Houses/Blue/Pieces"]
+modulate = Color( 0.0823529, 0.917647, 0.988235, 1 )
+margin_left = 206.0
+margin_top = 516.0
+margin_right = 242.0
+margin_bottom = 548.0
+custom_styles/normal = SubResource( 2 )
+script = ExtResource( 34 )
+
+[node name="Camera2D" type="Camera2D" parent="Houses/Blue/Pieces/0"]
+position = Vector2( 18, 18 )
+zoom = Vector2( 0.4, 0.5 )
+smoothing_enabled = true
+
+[node name="Red" type="Node2D" parent="Houses"]
+position = Vector2( -285, -1 )
+
+[node name="House_Enter_Zone" type="Node2D" parent="Houses/Red"]
+
+[node name="Start_Board_Pos" type="Label" parent="Houses/Red"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+text = "1"
+
+[node name="Pieces" type="Node2D" parent="Houses/Red"]
+
+[node name="0" type="Button" parent="Houses/Red/Pieces"]
+modulate = Color( 0.92549, 0.0235294, 0.0235294, 1 )
+margin_left = 491.0
+margin_top = 515.0
+margin_right = 527.0
+margin_bottom = 547.0
+custom_styles/normal = SubResource( 2 )
+script = ExtResource( 34 )
+
+[node name="Camera2D" type="Camera2D" parent="Houses/Red/Pieces/0"]
+position = Vector2( 18, 18 )
+zoom = Vector2( 0.4, 0.5 )
+smoothing_enabled = true
+
+[node name="Pause_Button" type="Button" parent="."]
+margin_left = 869.0
+margin_top = 586.0
+margin_right = 925.0
+margin_bottom = 638.0
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = SubResource( 4 )
+
+[node name="MainCamera" type="Camera2D" parent="."]
+position = Vector2( 512, 350 )
+
+[node name="BS_Panel" parent="." instance=ExtResource( 36 )]
+visible = false
+
+[node name="Notification" parent="." instance=ExtResource( 37 )]
+unique_name_in_owner = true
+visible = false
+position = Vector2( 590, -48 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Pause_Menu" parent="." instance=ExtResource( 31 )]
+visible = false
+position = Vector2( 520, 320 )

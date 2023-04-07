@@ -80,6 +80,7 @@ public class Dice : Node2D
 
     public int getRolledValue()
     {
+        // return 6;
         return (diceAnim.Frame + 1); // 1 added as the indexing starts from the 0th index
     }
 

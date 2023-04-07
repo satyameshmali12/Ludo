@@ -23,6 +23,8 @@ public class Global_Data:Node
     public Player_Data currPlayerData = null;
     public bool canPlay = false;
 
+    public bool isTarLocFuncTri = false;
+
     
 
     public override void _Process(float delta)

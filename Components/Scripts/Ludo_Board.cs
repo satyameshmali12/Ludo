@@ -95,8 +95,9 @@ public class Ludo_Board : Basic_Board
             forwardPiece.move(diceVal);
             return;
         }
-
-        playablePieces[Convert.ToInt32(GD.RandRange(0, playablePieces.Count - 1))].move(diceVal);
+        
+        int ranCount = Convert.ToInt32(GD.RandRange(0, playablePieces.Count - 1));
+        playablePieces[ranCount].move(diceVal);
 
 
     }

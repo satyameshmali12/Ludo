@@ -1,0 +1,5 @@
+data/ParadyData.txt
+
+RolledValue
+Loan
+Bonus

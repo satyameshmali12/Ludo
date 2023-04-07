@@ -1,0 +1,181 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Assets/Fonts/MAGNETOB.TTF" type="DynamicFontData" id=1]
+[ext_resource path="res://Business_Board_Stuff/Scripts/Buying_Node.cs" type="Script" id=2]
+[ext_resource path="res://Business_Board_Stuff/Scripts/Paying_Node.cs" type="Script" id=3]
+[ext_resource path="res://Business_Board_Stuff/Scripts/BS_Panel.cs" type="Script" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0431373, 0.243137, 0.345098, 1 )
+skew = Vector2( 0.1, 0 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+outline_color = Color( 0.117647, 0.117647, 0.117647, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+outline_color = Color( 0.117647, 0.117647, 0.117647, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.615686, 0.403922, 0.231373, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.458824, 0.258824, 0.0941176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="BS_Panel" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Bg" type="Button" parent="."]
+margin_left = 76.0
+margin_top = 64.0
+margin_right = 964.0
+margin_bottom = 643.0
+custom_styles/disabled = SubResource( 1 )
+disabled = true
+
+[node name="Name" type="Label" parent="."]
+margin_left = 133.0
+margin_top = 86.0
+margin_right = 476.0
+margin_bottom = 110.0
+custom_fonts/font = SubResource( 2 )
+text = "Player Name :- Name"
+align = 1
+valign = 1
+
+[node name="Task" type="Label" parent="."]
+margin_left = 131.0
+margin_top = 112.0
+margin_right = 953.0
+margin_bottom = 177.0
+custom_fonts/font = SubResource( 2 )
+text = "Some Information"
+align = 1
+valign = 1
+
+[node name="Buying_Node" type="Node2D" parent="."]
+visible = false
+script = ExtResource( 2 )
+
+[node name="Confirm" type="Button" parent="Buying_Node"]
+margin_left = 700.0
+margin_top = 549.0
+margin_right = 877.0
+margin_bottom = 585.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/normal = SubResource( 5 )
+text = "Buy"
+
+[node name="Next" type="Button" parent="Buying_Node"]
+margin_left = 101.0
+margin_top = 550.0
+margin_right = 278.0
+margin_bottom = 586.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/normal = SubResource( 5 )
+text = "Next"
+__meta__ = {
+"_editor_description_": "To pass on die to the next player only available for the buying node as it is the players choice wether to buy or notq"
+}
+
+[node name="Paying_Node" type="Node2D" parent="."]
+visible = false
+script = ExtResource( 3 )
+
+[node name="Confirm" type="Button" parent="Paying_Node"]
+margin_left = 700.0
+margin_top = 549.0
+margin_right = 877.0
+margin_bottom = 585.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/normal = SubResource( 5 )
+text = "Pay"
+
+[node name="Owner_Name" type="Label" parent="Paying_Node"]
+margin_left = 119.0
+margin_top = 406.0
+margin_right = 462.0
+margin_bottom = 430.0
+custom_fonts/font = SubResource( 2 )
+text = "Ticket Owned By :- Name"
+align = 1
+valign = 1
+
+[node name="Time" type="Label" parent="."]
+margin_left = 144.0
+margin_top = 262.0
+margin_right = 320.0
+margin_bottom = 294.0
+custom_fonts/font = SubResource( 2 )
+text = "Timeleft :- Samay"
+align = 1
+valign = 1
+
+[node name="Ticket_Name" type="Label" parent="."]
+margin_left = 123.0
+margin_top = 182.0
+margin_right = 402.0
+margin_bottom = 236.0
+custom_fonts/font = SubResource( 2 )
+text = "Ticket_Name :- Name"
+align = 1
+valign = 1
+
+[node name="Price" type="Label" parent="."]
+margin_left = 102.0
+margin_top = 326.0
+margin_right = 924.0
+margin_bottom = 391.0
+custom_fonts/font = SubResource( 2 )
+text = "Price"
+align = 1
+valign = 1
+
+[node name="Available_Money" type="Label" parent="."]
+margin_left = 550.0
+margin_top = 86.0
+margin_right = 958.0
+margin_bottom = 110.0
+custom_fonts/font = SubResource( 2 )
+text = "Money: 000"
+align = 1
+valign = 1

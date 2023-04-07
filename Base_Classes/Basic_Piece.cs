@@ -20,11 +20,11 @@ public class Basic_Piece : Button
 
 
 
-    int movingStep = 0;
+    public int movingStep = 0;
 
-    float speed = 10;
+    public float speed = 10;
 
-    Global_Data data;
+    public Global_Data data;
 
     Godot.Collections.Array houseEnterZoneRects;
     Basic_Func basf;
@@ -60,7 +60,6 @@ public class Basic_Piece : Button
 
         if (!isInHouse)
         {
-
             // for giving the movement to the piece
             // all the data is been taken from the ludo_board class
             if ((isPressedOverCurRect() || this.Pressed) && this.pieceType == data.currentPlayingType && !data.isPieceTransioning && data.rolledDice != null)
@@ -100,13 +99,20 @@ public class Basic_Piece : Button
                         if (data.targetPiece == this)
                         {
                             int boardPosBef = boardPos;
-                            basf.data.board.pieceReachedTargetLocationAction(this);
+
                             // checking whether the above function has alter the position or not
                             // if so then not changing the die
-                            if (boardPos == boardPosBef)
+
+                            if (boardPos == boardPosBef && !data.isTarLocFuncTri)
                             {
-                                basf.data.board.next();
+                                basf.data.board.pieceReachedTargetLocationAction(this);
+                                data.isTarLocFuncTri = true;
+                                if (data.board.boardType!=Board_Type.Business_Board)
+                                {
+                                    basf.data.board.next();
+                                }
                             }
+
                         }
                     }
                 }
@@ -117,12 +123,12 @@ public class Basic_Piece : Button
 
     }
 
-    public bool canMove(int stepIncre)
+    public virtual bool canMove(int stepIncre)
     {
         return (((currentStep + stepIncre) <= data.board.maxMoves) && (isUnlocked || stepIncre == 6));
     }
 
-    public void move(int movingStep)
+    public virtual void move(int movingStep)
     {
 
         // inUnlocked is check in order to excute the second statement if the piece is not unlocked while though even having the dice value is 6
@@ -143,7 +149,7 @@ public class Basic_Piece : Button
 
     }
 
-    public int moveOnBoard(int currentBoardPos, int increment = 1)
+    public virtual int moveOnBoard(int currentBoardPos, int increment = 1)
     {
         currentBoardPos += increment;
         int tAreaLen = data.board.transitionAreaLength;
@@ -227,5 +233,9 @@ public class Basic_Piece : Button
         return basf.isMouseInsideRect(cRect.RectGlobalPosition, cRect.RectSize, this.GetGlobalMousePosition()) && Input.IsActionJustPressed("Mouse_Pressed");
     }
 
+    public Camera2D getCamera()
+    {
+        return this.GetNode<Camera2D>("Camera2D");
+    }
 
 }

@@ -11,6 +11,8 @@ public class Player_Data
     public Dice dice;
     public string playerName;
     int playerPlayingIndex;
+    public int money = 0;
+    public int skipDie = 0;
     public Player_Data(Node2D piece,Player_Type playerType,string playerName,Dice dice)
     {
         this.house = piece;

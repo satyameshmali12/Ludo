@@ -43,9 +43,7 @@ public abstract class Basic_Board : Node2D
 
         // doing the setting for a new game
         data.isGameCompleted = false;
-        data.isPieceTransioning = false;
-        data.rolledDice = null;
-        data.targetPiece = null;
+        reset();
 
 
         data.boardRects = this.GetNode<Node2D>("Rects").GetChildren();
@@ -101,17 +99,6 @@ public abstract class Basic_Board : Node2D
     public override void _Process(float delta)
     {
 
-        if (Input.IsActionPressed("testing"))
-        {
-            data.testingPieces.Clear();
-            GD.Print(data.isPieceTransioning," ",data.rolledDice, " ",data.targetPiece);
-            data.isGameCompleted = false;
-            data.isPieceTransioning = false;
-            data.rolledDice = null;
-            data.targetPiece = null;
-
-        }
-
         if (!data.isGameCompleted)
         {
             if (winPlayerData.Count >= playersData.Count - 1)
@@ -126,14 +113,21 @@ public abstract class Basic_Board : Node2D
                     }
                 }
                 data.isGameCompleted = true;
+                if(boardType==Board_Type.Business_Board)
+                {
+                    winPlayerData.Reverse();
+                }
                 data.winPlayerData = winPlayerData;
                 this.GetNode<Win_Screen>("Win_Screen").Visible = true;
             }
 
-            foreach (Label lab in this.GetNode("Current_Die_Display").GetChildren())
+            if (boardType != Board_Type.Business_Board)
             {
-                lab.Visible = (lab.Name.ToLower() == data.currentPlayingType.ToLower());
-                lab.Text = data.currentPlayingType;
+                foreach (Label lab in this.GetNode("Current_Die_Display").GetChildren())
+                {
+                    lab.Visible = (lab.Name.ToLower() == data.currentPlayingType.ToLower());
+                    lab.Text = data.currentPlayingType;
+                }
             }
 
             if (isFirstRender)
@@ -148,13 +142,23 @@ public abstract class Basic_Board : Node2D
             }
             pauseButton.Visible = !pauseMenu.Visible;
 
+
+
             Player_Data pData = playersData[playerPlayingIndex];
             data.currentPlayingType = pData.pieceType;
             data.currPlayerData = pData;
 
             if (!data.isPieceTransioning)
             {
+                data.isTarLocFuncTri = false;
                 Dice dice = data.rolledDice;
+                if (pData.skipDie > 0)
+                {
+                    pData.skipDie--;
+                    next();
+                    return;
+                }
+
                 if (dice != null)
                 {
                     if (dice.getIsDiceRolled())
@@ -181,15 +185,13 @@ public abstract class Basic_Board : Node2D
                             }
                         }
 
+                        pieceSelectExtension();
 
                         // passing the current player die if the playble piece for the specific house is zero
                         if (playablePieces.Count == 0 || (playablePieces.Count == 1 && !playablePieces[0].canMove(dice.getRolledValue())))
-                        // if(playablePieces.Count==0)
                         {
                             next();
-                            return;
                         }
-
                         else if (playablePieces.Count == 1 || !playablePieces[0].isUnlocked)
                         {
                             playablePieces[0].move(dice.getRolledValue());
@@ -204,7 +206,7 @@ public abstract class Basic_Board : Node2D
                     }
                 }
                 // changing the die if the player has win
-                else if (pData.isPlayerWin)
+                else if (pData.isPlayerWin || winPlayerData.Contains(pData))
                 {
                     next();
                     playerPlayingIndex = basf.minMaxer(playerPlayingIndex + 1, playersData.Count - 1, 0);
@@ -221,7 +223,7 @@ public abstract class Basic_Board : Node2D
 
     }
 
-    public virtual void pieceReachedTargetLocationAction(Basic_Piece piece) { }
+    public virtual void pieceReachedTargetLocationAction(Basic_Piece piece) {}
 
     public virtual void processExtension() { }
     public void next(bool isManuallyCalled = false)
@@ -253,7 +255,7 @@ public abstract class Basic_Board : Node2D
 
         if (data.rolledDice != null)
         {
-            if (data.rolledDice.getRolledValue() != 6)
+            if (data.rolledDice.getRolledValue() != 6 && !isManuallyCalled)
             {
                 playerPlayingIndex++;
                 if (playerPlayingIndex > playersData.Count - 1)
@@ -293,6 +295,7 @@ public abstract class Basic_Board : Node2D
         return null;
     }
     public void setPieceSizes()
+
     {
         foreach (ReferenceRect rect in data.allRects)
         {
@@ -316,8 +319,13 @@ public abstract class Basic_Board : Node2D
 
                 int yDividingValue = Convert.ToInt32(Math.Ceiling(specRectPieces.Count / 3d));
 
-                float xIncrement = refRectSize.x / xDividingValue;
-                float yIncrement = refRectSize.y / xDividingValue;
+                float managedXSize = (refRectSize.x < 65) ? refRectSize.x : 65;
+                float managedYSize = (refRectSize.y < 65) ? refRectSize.y : 65;
+                float xChange = (refRectSize.x - managedXSize) / 2;
+                float yChange = (refRectSize.y - managedYSize) / 2;
+
+                float xIncrement = managedYSize / xDividingValue;
+                float yIncrement = managedYSize / xDividingValue;
 
                 int yMultiplier = 0;
 
@@ -341,7 +349,7 @@ public abstract class Basic_Board : Node2D
 
                         foreach (Basic_Piece _Piece in inLinePieces)
                         {
-                            _Piece.RectGlobalPosition = new Vector2(rect.RectGlobalPosition.x + xStart, rect.RectGlobalPosition.y + yStart + (yMultiplier * yIncrement));
+                            _Piece.RectGlobalPosition = new Vector2(xChange + rect.RectGlobalPosition.x + xStart, yChange + rect.RectGlobalPosition.y + yStart + (yMultiplier * yIncrement));
                             xStart += xIncrement;
                         }
 
@@ -354,5 +362,14 @@ public abstract class Basic_Board : Node2D
 
         }
 
+    }
+
+    public virtual void pieceSelectExtension() { }
+
+    public virtual void reset()
+    {
+        data.isPieceTransioning = false;
+        data.rolledDice = null;
+        data.targetPiece = null;
     }
 }
